@@ -1,0 +1,11 @@
+
+name: Anya
+age: 25
+city: Kyiv
+name: Olya
+age: 33
+city: Herson
+name: Anya
+age: 25
+age: 33
+city: Kyiv
