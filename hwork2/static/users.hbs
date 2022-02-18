@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Users</title>
+</head>
+<body>
+
+<div style="font-size: 25px">
+
+    {{#each users}}
+        <div>
+            firstname: <div style="font-weight: bold">{{this.firstname}}</div>
+            lastname: <div style="font-weight: bold">{{this.lastname}}</div>
+            email: <div style="font-weight: bold">{{this.email}}</div>
+            <!--        password: <div style="font-weight: bold">{{this.password}}</div>-->
+            <!--        age: <div style="font-weight: bold">{{this.age}}</div>-->
+            <!--        city: <div style="font-weight: bold">{{this.city}}</div>-->
+            <form class="form" action="/users/{{this.id}}">
+                <input type="submit" value="info">
+            </form>
+        </div>
+    {{/each}}
+
+</div>
+</body>
+</html>
