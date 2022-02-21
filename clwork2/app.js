@@ -15,6 +15,10 @@ app.set('view engine', '.hbs');
 app.engine('.hbs', engine({defaultLayout: false}));
 app.set('views', path.join(__dirname, 'static'));
 
+// #Практическая
+//
+// Необхідно розширити ваше ДЗ:
+//     - додайте ендпоінт signIn який буде приймати email і password і якщо все вірно то редірект на сторінку цього
 
 app.get('/login', (req, res) => {
     res.render('login')
@@ -35,31 +39,54 @@ app.get('/users', ({query}, res) => {
     res.render('users', {users})
 })
 
-app.post('/login', ({body}, res) => {
+app.get('/signIn', (req, res) => {
+    res.render('signIn')
+})
+
+
+app.post('/login',({body}, res) => {
     const userData = users.some(user=> user.email===body.email)
     if (userData) {
         error="This email already exist";
         res.redirect('/error');
-        return;
-    }
+        return;}
     users.push({...body, id: users.length? users[users.length -1].id+1 : 1})
     res.redirect('/users')
 })
+
+
+
+app.post('/signIn',({body}, res) => {
+    const signData = users.some(user=> user.email===body.email)
+    if (signData) {
+        error="This email already exist";
+        res.redirect('/error');
+        return;}
+    users.push({...body, id: users.length? users[users.length -1].id+1 : 1})
+    if (!body.password) {
+        error="password is not provided";
+        res.redirect('/error');
+        return;}
+        else {
+    users.push({...body, id: users.length? users[users.length -1].id+1 : 1})
+    }
+
+    res.redirect('/users')
+})
+
 
 app.get('/users/:userId', ({params}, res) => {
     const user= users.find (user => user.id === +params.userId)
     if (!user) {
         error = `User with id ${params.userId} doesn't exist`;
         res.redirect('/error')
-        return
-    }
+        return}
     res.render('userInfo', {user})
 })
 
 app.get('/error', (req, res) => {
     res.render('error', {error})
 })
-
 
 app.use((req, res) => {
     res.render('pageNotFound')
