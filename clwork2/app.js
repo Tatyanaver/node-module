@@ -43,7 +43,6 @@ app.get('/signIn', (req, res) => {
     res.render('signIn')
 })
 
-
 app.post('/login',({body}, res) => {
     const userData = users.some(user=> user.email===body.email)
     if (userData) {
@@ -54,25 +53,13 @@ app.post('/login',({body}, res) => {
     res.redirect('/users')
 })
 
-
-
 app.post('/signIn',({body}, res) => {
-    const signData = users.some(user=> user.email===body.email)
-    if (signData) {
-        error="This email already exist";
+    const user = users.find(user => user.email===body.email && user.password === body.password)
+    if (!user) {
+        error= "email or password is incorrect";
         res.redirect('/error');
-        return;}
-    users.push({...body, id: users.length? users[users.length -1].id+1 : 1})
-    if (!body.password) {
-        error="password is not provided";
-        res.redirect('/error');
-        return;}
-        else {
-    users.push({...body, id: users.length? users[users.length -1].id+1 : 1})
-    }
-
-    res.redirect('/users')
-})
+        return}
+    res.redirect(`users/${user.id}`)})
 
 
 app.get('/users/:userId', ({params}, res) => {
